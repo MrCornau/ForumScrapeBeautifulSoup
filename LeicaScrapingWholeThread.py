@@ -2,13 +2,14 @@
 from bs4 import BeautifulSoup
 import requests
 import csv
-
+import json
 
 
 suburl='https://www.l-camera-forum.com/forum/263-leica-m10/'
 url = 'https://www.l-camera-forum.com/topic/325898-hypothetical-question-this-should-stir-the-pot/'
 
-SubsubLinks = []
+SubsubLinks = {}
+SubsubLinks['SubThreads'] = []
 
 def getdata(url):
     source = requests.get(url).text
@@ -26,29 +27,26 @@ def getnextpage(soup):
 
 
 def crawlLinks(subsoup):
-    # print(subsoup.find('li', {'class': 'ipsDataItem'}).find('a')['href'])
-    # link = subsoup.find('li', {'class': 'ipsDataItem'}).find('a')['href']
-    # title = subsoup.find('li', {'class': 'ipsDataItem'}).find('a').text
-    # time = subsoup.find('li', {'class': 'ipsDataItem'}).find('time')['datetime']
-    # print(link,'__',title,'___',time)
     for subsub in subsoup.find_all('li', {'class': 'ipsDataItem ipsDataItem_responsivePhoto'}):
         try: 
             link = subsub.find('a')['href']
-            title = subsub.find('a').text
+            title = subsub.find('a').text.lstrip().rstrip() 
             time = subsub.find('time')['datetime']
+            SubsubLinks['SubThreads'].append({
+                'title': title,
+                'link': link,
+                'time': time
+            })
         except Exception as e:
-            link =  'blaaa'
-            title = 'bliii'
-            time = 'blub'
+            link =  None
+            title = None
+            time = None
         finally:
             print(link,'__',title,'___',time)
-
         print('_______')
-    # time = subsoup.find('li', {'class': 'ipsDataItem'}).find('time')['datetime']
-
-
-    #     SubsubLinks.append(subsub.find('a')['href'])
-
+    
+    with open('subsubTest.txt', 'w') as outfile:
+        json.dump(SubsubLinks, outfile)
 
 
 crawlLinks(getdata(suburl))
