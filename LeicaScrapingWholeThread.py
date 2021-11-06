@@ -45,19 +45,22 @@ def crawlLinks(subsoup):
             print(link,'__',title,'___',time)
         print('_______')
     
-    with open('subsubTest.txt', 'w') as outfile:
-        json.dump(SubsubLinks, outfile)
+    
+    
 
+# subsoup = getdata(suburl);
+# crawlLinks(subsoup);
 
-crawlLinks(getdata(suburl))
-
-# while True:
-#     subsoup = getdata(suburl);
-#     crawlLinks(subsoup);
-#     suburl = getnextpage(subsoup)
-#     if not suburl:
-#         print(SubsubLinks)
-#         break
+while True:
+    subsoup = getdata(suburl);
+    crawlLinks(subsoup);
+    print(len(SubsubLinks['SubThreads']))
+    suburl = getnextpage(subsoup)
+    if len(SubsubLinks['SubThreads'])> 1000 or not suburl :
+        # print(SubsubLinks)
+        with open('Sublinks.txt', 'w') as outfile:
+            json.dump(SubsubLinks, outfile)
+        break
 
 
 
