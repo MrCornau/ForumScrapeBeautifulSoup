@@ -5,7 +5,7 @@ import csv
 import json
 
 
-suburl='https://www.l-camera-forum.com/forum/263-leica-m10/'
+suburl='https://www.l-camera-forum.com/forum/177-leica-m-type-240-262/'
 url = 'https://www.l-camera-forum.com/topic/325898-hypothetical-question-this-should-stir-the-pot/'
 
 SubsubLinks = {}
@@ -58,7 +58,7 @@ while True:
     suburl = getnextpage(subsoup)
     if len(SubsubLinks['SubThreads'])> 1000 or not suburl :
         # print(SubsubLinks)
-        with open('Sublinks.txt', 'w') as outfile:
+        with open('LeicaM240262.txt', 'w') as outfile:
             json.dump(SubsubLinks, outfile)
         break
 
