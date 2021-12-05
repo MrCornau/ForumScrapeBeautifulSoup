@@ -1,1 +1,9 @@
 venv
+
+_testfiles
+
+.vscode
+
+BigData_L-Forum
+
+LittleHelper
